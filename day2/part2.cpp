@@ -1,0 +1,25 @@
+#include <iostream>
+#include "reader.h"
+
+int main()
+{
+    // file reading
+    Reader day2Reader("../../day2/input.txt");
+    std::vector<resultType> vals = day2Reader.readFile();
+
+    size_t nValidsPws = 0;
+    // data processing
+    for (const auto &val : vals)
+    {
+        const auto &[index1, index2, character, password] = val;
+
+        if ((password[index1 - 1] == character && password[index2 - 1] != character) ||
+            (password[index2 - 1] == character && password[index1 - 1] != character))
+        {
+            nValidsPws++;
+        }
+    }
+    std::cout << "\nvalid passwords: " << nValidsPws;
+
+    return 0;
+}
