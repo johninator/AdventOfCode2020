@@ -3,10 +3,9 @@
 
 #include <string>
 #include <fstream>
-#include <sstream>
 #include <vector>
 
-typedef std::vector<std::string> answerBlock;
+typedef std::vector<std::string> answerBlockType;
 
 class Reader
 {
@@ -22,30 +21,27 @@ public:
         }
     }
 
-    std::vector<answerBlock> readFile()
+    std::vector<answerBlockType> readFile()
     {
         std::cout << "\n** read file **";
 
-        std::vector<answerBlock> vals;
-        answerBlock val;
+        std::vector<answerBlockType> vals;
+        answerBlockType val;
         std::string line;
 
         while (std::getline(mInputStream, line))
         {
-            if(!line.empty())
+            if (!line.empty())
             {
-              val.clear();
-              val.push_back(line);
-              // continue with rest of the block
-              while (std::getline(mInputStream, line))
-              {
-                if(!line.empty())
+                val.clear();
+                val.push_back(line);
+                // continue with rest of the block
+                while (std::getline(mInputStream, line) && !line.empty())
                 {
-                  val.push_back(line);
+                    val.push_back(line);
                 }
-              }
-              // save block and resume work
-              vals.push_back(val);
+                // save block and resume work
+                vals.push_back(val);
             }
         }
         return vals;
