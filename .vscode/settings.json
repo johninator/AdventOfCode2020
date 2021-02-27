@@ -50,6 +50,10 @@
         "xloctime": "cpp",
         "xtree": "cpp",
         "map": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "list": "cpp",
+        "unordered_set": "cpp",
+        "xhash": "cpp",
+        "algorithm": "cpp"
     }
 }
