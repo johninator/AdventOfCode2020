@@ -54,6 +54,7 @@
         "list": "cpp",
         "unordered_set": "cpp",
         "xhash": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "numeric": "cpp"
     }
 }
