@@ -10,6 +10,7 @@ struct Mask
 {
     long long mask_one;
     long long mask_zero;
+    std::vector<int> floating_positions;
 };
 
 struct Assignment
@@ -79,6 +80,10 @@ public:
                     else if (ch == '1')
                     {
                         mask.mask_one |= (1ULL << pos);
+                    }
+                    else if (ch == 'X')
+                    {
+                        mask.floating_positions.push_back(pos);
                     }
                     --pos;
                 }
