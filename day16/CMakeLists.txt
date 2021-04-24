@@ -5,6 +5,7 @@ include(CTest)
 enable_testing()
 
 add_executable(day16_1 part1.cpp)
+add_executable(day16_2 part2.cpp)
 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
