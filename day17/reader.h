@@ -20,18 +20,20 @@ struct StateMap
 public:
     StateMap(const int num_rows,
              const int num_cols,
-             const int num_levels)
-        : num_rows(num_rows), num_cols(num_cols), num_levels(num_levels)
+             const int num_levels,
+             const int num_hyperdims)
+        : num_rows(num_rows), num_cols(num_cols), num_levels(num_levels), num_hyperdims(num_hyperdims)
     {
-        states.resize(num_rows * num_cols * num_levels);
+        states.resize(num_rows * num_cols * num_levels * num_hyperdims);
         std::fill(states.begin(), states.end(), INACTIVE);
     }
 
     State &getState(const int row,
                     const int col,
-                    const int level)
+                    const int level,
+                    const int hyperdim)
     {
-        return states[col + row * num_cols + level * num_rows * num_cols];
+        return states[col + row * num_cols + level * num_rows * num_cols + hyperdim * num_cols * num_rows * num_levels];
     }
 
     void print();
@@ -42,28 +44,34 @@ public:
     int num_rows;
     int num_cols;
     int num_levels;
+    int num_hyperdims;
 };
 
 void StateMap::print()
 {
-    for (int level = 0; level < num_levels; ++level)
+    for (int hyperdim = 0; hyperdim < num_hyperdims; ++hyperdim)
     {
-        std::cout << "\n ---   level: " << level << " ---" << std::endl;
+        std::cout << "\n ---   hyperdim: " << hyperdim << " ---" << std::endl;
 
-        for (int row = 0; row < num_rows; ++row)
+        for (int level = 0; level < num_levels; ++level)
         {
-            for (int col = 0; col < num_cols; ++col)
+            std::cout << "\n ---   level: " << level << " ---" << std::endl;
+
+            for (int row = 0; row < num_rows; ++row)
             {
-                if (getState(row, col, level) == ACTIVE)
+                for (int col = 0; col < num_cols; ++col)
                 {
-                    std::cout << "#";
+                    if (getState(row, col, level, hyperdim) == ACTIVE)
+                    {
+                        std::cout << "#";
+                    }
+                    else
+                    {
+                        std::cout << ".";
+                    }
                 }
-                else
-                {
-                    std::cout << ".";
-                }
+                std::cout << std::endl;
             }
-            std::cout << std::endl;
         }
     }
 }
@@ -118,7 +126,7 @@ public:
             }
         }
 
-        StateMap statemap(8, 8, 1);
+        StateMap statemap(8, 8, 1, 1);
         statemap.states = std::move(states);
 
         return statemap;
